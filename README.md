@@ -15,6 +15,7 @@ Use with a PSR-7 request implementation, like [Zend Diactoros](https://github.co
 use Jerowork\MiddlewareDispatcher\FinalResponseMiddleware;
 use Jerowork\MiddlewareDispatcher\MiddlewareRequestHandler;
 use Zend\Diactoros\Response;
+use Zend\Diactoros\ServerRequestFactory;
 
 // Setup a list of PSR-15 middlewares
 $middlewares = [
