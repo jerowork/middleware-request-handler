@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Jerowork\MiddlewareDispatcher;
+namespace Jerowork\MiddlewareDispatcher\Middleware;
 
 use Interop\Http\Server\MiddlewareInterface;
 use Interop\Http\Server\RequestHandlerInterface;
