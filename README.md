@@ -21,7 +21,7 @@ use Zend\Diactoros\ServerRequestFactory;
 $middlewares = [
     new SomeMiddleware(),
     new AnotherMiddleware(),
-    new FinalResponseMiddleware(new Response()), // always end with a final response middleware implementation of your choice)
+    new FinalResponseMiddleware(new Response()), // use provided 'final' response middleware or your own implementation
 ];
 
 // Handle a PSR-7 server request to response by the request handler (PSR-15)
