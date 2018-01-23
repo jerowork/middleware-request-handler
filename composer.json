@@ -19,8 +19,8 @@
     ],
     "require": {
         "php": "^7.0",
-        "http-interop/http-server-handler": "^1.0",
-        "http-interop/http-server-middleware": "^1.0"
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0"
     },
     "provide": {
         "http-interop/http-server-handler": "1.0"

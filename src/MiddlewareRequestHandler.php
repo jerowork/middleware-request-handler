@@ -2,11 +2,11 @@
 
 namespace Jerowork\MiddlewareDispatcher;
 
-use Interop\Http\Server\MiddlewareInterface;
-use Interop\Http\Server\RequestHandlerInterface;
 use Jerowork\MiddlewareDispatcher\Exception\RequestHandlerException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 final class MiddlewareRequestHandler implements RequestHandlerInterface
 {
