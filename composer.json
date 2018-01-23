@@ -23,7 +23,7 @@
         "psr/http-server-middleware": "^1.0"
     },
     "provide": {
-        "http-interop/http-server-handler": "1.0"
+        "psr/http-server-handler": "1.0"
     },
     "suggest": {
         "zendframework/zend-diactoros": "As PSR-7 implementation"
