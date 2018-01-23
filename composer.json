@@ -1,8 +1,14 @@
 {
     "name": "jerowork/middleware-request-handler",
-    "description": "Minimalist PSR-15 middleware based request handler (dispatcher)",
-    "keywords": ["PSR-15", "PSR-7", "middleware", "request handler", "dispatcher"],
     "type": "library",
+    "description": "Minimalist PSR-15 middleware based request handler (dispatcher)",
+    "keywords": [
+        "PSR-15",
+        "PSR-7",
+        "middleware",
+        "request handler",
+        "dispatcher"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -11,23 +17,23 @@
             "homepage": "http://jero.work"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "Jerowork\\MiddlewareDispatcher\\": "src/"
-        }
-    },
     "require": {
         "php": "^7.0",
-        "http-interop/http-server-middleware": "^1.0",
-        "http-interop/http-server-handler": "^1.0"
-    },
-    "suggest": {
-        "zendframework/zend-diactoros": "As PSR-7 implementation"
+        "http-interop/http-server-handler": "^1.0",
+        "http-interop/http-server-middleware": "^1.0"
     },
     "provide": {
         "http-interop/http-server-handler": "1.0"
     },
+    "suggest": {
+        "zendframework/zend-diactoros": "As PSR-7 implementation"
+    },
     "config": {
         "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "Jerowork\\MiddlewareDispatcher\\": "src/"
+        }
     }
 }
