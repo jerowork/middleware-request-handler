@@ -12,7 +12,6 @@ Use with a PSR-7 request implementation, like [Zend Diactoros](https://github.co
 
 ### Example
 ```php
-use Jerowork\MiddlewareDispatcher\Middleware\FinalResponseMiddleware;
 use Jerowork\MiddlewareDispatcher\MiddlewareRequestHandler;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequestFactory;
@@ -21,11 +20,10 @@ use Zend\Diactoros\ServerRequestFactory;
 $middlewares = [
     new SomeMiddleware(),
     new AnotherMiddleware(),
-    new FinalResponseMiddleware(new Response()), // use provided 'final' response middleware or your own implementation
 ];
 
 // Handle a PSR-7 server request to response by the request handler (PSR-15)
-$response = (new MiddlewareRequestHandler($middlewares))
+$response = (new MiddlewareRequestHandler($middlewares, new Response()))
     ->handle(ServerRequestFactory::fromGlobals());
 
 // Output PSR-7 response with a response emitter implementation of your choice
