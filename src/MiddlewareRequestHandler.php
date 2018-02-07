@@ -2,6 +2,7 @@
 
 namespace Jerowork\MiddlewareDispatcher;
 
+use Jerowork\MiddlewareDispatcher\Exception\RequestHandlerException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -17,43 +18,32 @@ final class MiddlewareRequestHandler implements RequestHandlerInterface
     private $stack;
 
     /**
-     * Final response to reverse middleware stack flow.
-     *
-     * @var ResponseInterface
-     */
-    private $response;
-
-    /**
      * @param MiddlewareInterface[] $middlewares
-     * @param ResponseInterface $response
      */
-    public function __construct(array $middlewares, ResponseInterface $response)
+    public function __construct(array $middlewares)
     {
         $this->stack = new \SplStack();
 
         foreach ($middlewares as $middleware) {
-            // ignore middleware not implementing psr interface
             if (!$middleware instanceof MiddlewareInterface) {
                 continue;
             }
 
             $this->stack->push($middleware);
         }
-
-        $this->response = $response;
     }
 
     /**
      * @inheritDoc
+     *
+     * @throws RequestHandlerException
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if ($this->stack->isEmpty()) {
-            // Stack empty, return final reversal response
-            return $this->response;
+            throw new RequestHandlerException('Middleware stack exhausted, missing final response middleware?');
         }
 
-        // Process next middleware
         return $this->stack->shift()->process($request, $this);
     }
 }

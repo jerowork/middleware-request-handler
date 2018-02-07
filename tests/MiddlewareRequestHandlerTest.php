@@ -2,6 +2,8 @@
 
 namespace Jerowork\MiddlewareDispatcher\Test;
 
+use Jerowork\MiddlewareDispatcher\Exception\RequestHandlerException;
+use Jerowork\MiddlewareDispatcher\Middleware\FinalResponseMiddleware;
 use Jerowork\MiddlewareDispatcher\MiddlewareRequestHandler;
 use Jerowork\MiddlewareDispatcher\Test\Stub\Middleware1Stub;
 use Jerowork\MiddlewareDispatcher\Test\Stub\Middleware3Stub;
@@ -16,8 +18,16 @@ class MiddlewareRequestHandlerTest extends TestCase
     public function testReturnReverseResponseOnEmptyStack()
     {
         $response = new Response();
-        $handler = new MiddlewareRequestHandler([], $response);
+        $handler = new MiddlewareRequestHandler([
+            new FinalResponseMiddleware($response),
+        ]);
         $this->assertSame($response, $handler->handle(ServerRequestFactory::fromGlobals()));
+    }
+
+    public function testThrowExceptionWhenNoReservalMiddlewareIsSet()
+    {
+        $this->expectException(RequestHandlerException::class);
+        (new MiddlewareRequestHandler([]))->handle(ServerRequestFactory::fromGlobals());
     }
 
     public function testStackIsCalledInCorrectOrder()
@@ -26,7 +36,8 @@ class MiddlewareRequestHandlerTest extends TestCase
             new Middleware1Stub(),
             new Middleware2Stub(),
             new Middleware3Stub(),
-        ], new Response());
+            new FinalResponseMiddleware(new Response()),
+        ]);
 
         $response = $handler->handle(ServerRequestFactory::fromGlobals());
 
@@ -40,7 +51,8 @@ class MiddlewareRequestHandlerTest extends TestCase
             new NotImplementingMiddlewareStub(),
             new Middleware2Stub(),
             new Middleware3Stub(),
-        ], new Response());
+            new FinalResponseMiddleware(new Response()),
+        ]);
 
         $response = $handler->handle(ServerRequestFactory::fromGlobals());
 
