@@ -15,19 +15,30 @@ Use with a PSR-7 request implementation, like [Zend Diactoros](https://github.co
 use Jerowork\MiddlewareDispatcher\Middleware\FinalResponseMiddleware;
 use Jerowork\MiddlewareDispatcher\MiddlewareRequestHandler;
 use Zend\Diactoros\Response;
+use Zend\Diactoros\Response\SapiEmitter;
 use Zend\Diactoros\ServerRequestFactory;
 
 // Setup a list of PSR-15 middlewares
 $middlewares = [
     new SomeMiddleware(),
-    new AnotherMiddleware(),
-    new FinalResponseMiddleware(new Response()), // reversal order middleware
+    new AnotherMiddleware()
 ];
 
+// Setup request handler
+$handler = new MiddlewareRequestHandler($middlewares);
+
+// Add other middlewares after construct
+$handler->addMiddleware(
+    new ThirdMiddleware(),
+    new FourthMiddleware()
+);
+
+// Add final reversal order middleware
+$handler->addMiddleware(new FinalResponseMiddleware(new Response());
+
 // Handle a PSR-7 server request to response by the request handler (PSR-15)
-$response = (new MiddlewareRequestHandler($middlewares))
-    ->handle(ServerRequestFactory::fromGlobals());
+$response = $handler->handle(ServerRequestFactory::fromGlobals());
 
 // Output PSR-7 response with a response emitter implementation of your choice
-(new Response\SapiEmitter())->emit($response);
+(new SapiEmitter())->emit($response);
 ```
