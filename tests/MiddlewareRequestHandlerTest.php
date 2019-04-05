@@ -58,4 +58,19 @@ class MiddlewareRequestHandlerTest extends TestCase
 
         $this->assertSame('321', (string)$response->getBody());
     }
+
+    public function testAddMiddlewareToHandler()
+    {
+        $handler = new MiddlewareRequestHandler();
+        $handler->addMiddleware(
+            new Middleware1Stub(),
+            new Middleware2Stub(),
+            new Middleware3Stub(),
+            new FinalResponseMiddleware(new Response())
+        );
+
+        $response = $handler->handle(ServerRequestFactory::fromGlobals());
+
+        $this->assertSame('321', (string)$response->getBody());
+    }
 }

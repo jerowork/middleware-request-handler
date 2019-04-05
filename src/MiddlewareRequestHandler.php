@@ -34,6 +34,18 @@ final class MiddlewareRequestHandler implements RequestHandlerInterface
     }
 
     /**
+     * Add middleware to stack.
+     */
+    public function addMiddleware(MiddlewareInterface ...$middlewares) : self
+    {
+        foreach ($middlewares as $middleware) {
+            $this->stack->push($middleware);
+        }
+
+        return $this;
+    }
+
+    /**
      * @inheritDoc
      *
      * @throws RequestHandlerException
