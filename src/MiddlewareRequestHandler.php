@@ -20,7 +20,7 @@ final class MiddlewareRequestHandler implements RequestHandlerInterface
     /**
      * @param MiddlewareInterface[] $middlewares
      */
-    public function __construct(array $middlewares)
+    public function __construct(array $middlewares = [])
     {
         $this->stack = new \SplStack();
 
