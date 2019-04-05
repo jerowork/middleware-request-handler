@@ -29,7 +29,7 @@ final class MiddlewareRequestHandler implements RequestHandlerInterface
                 continue;
             }
 
-            $this->stack->push($middleware);
+            $this->addMiddleware($middleware);
         }
     }
 
