@@ -53,7 +53,7 @@ final class MiddlewareRequestHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         if ($this->stack->isEmpty()) {
-            throw new RequestHandlerException('Middleware stack exhausted, missing final response middleware?');
+            throw RequestHandlerException::stackExhausted();
         }
 
         return $this->stack->shift()->process($request, $this);
