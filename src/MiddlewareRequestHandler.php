@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Jerowork\MiddlewareDispatcher;
 
@@ -7,13 +9,14 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use SplStack;
 
 final class MiddlewareRequestHandler implements RequestHandlerInterface
 {
     /**
      * Middleware stack.
      *
-     * @var \SplStack
+     * @var SplStack
      */
     private $stack;
 
@@ -22,10 +25,10 @@ final class MiddlewareRequestHandler implements RequestHandlerInterface
      */
     public function __construct(array $middlewares = [])
     {
-        $this->stack = new \SplStack();
+        $this->stack = new SplStack();
 
         foreach ($middlewares as $middleware) {
-            if (!$middleware instanceof MiddlewareInterface) {
+            if ($middleware instanceof MiddlewareInterface === false) {
                 continue;
             }
 
@@ -46,13 +49,11 @@ final class MiddlewareRequestHandler implements RequestHandlerInterface
     }
 
     /**
-     * @inheritDoc
-     *
      * @throws RequestHandlerException
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        if ($this->stack->isEmpty()) {
+        if ($this->stack->isEmpty() === true) {
             throw RequestHandlerException::stackExhausted();
         }
 

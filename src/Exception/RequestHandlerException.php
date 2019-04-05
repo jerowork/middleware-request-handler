@@ -1,8 +1,12 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Jerowork\MiddlewareDispatcher\Exception;
 
-class RequestHandlerException extends \LogicException
+use Exception;
+
+class RequestHandlerException extends Exception
 {
     public static function stackExhausted() : RequestHandlerException
     {

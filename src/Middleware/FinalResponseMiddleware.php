@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Jerowork\MiddlewareDispatcher\Middleware;
 
@@ -9,23 +11,21 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 final class FinalResponseMiddleware implements MiddlewareInterface
 {
-    /** @var ResponseInterface */
+    /**
+     * @var ResponseInterface
+     */
     private $response;
 
-    /**
-     * @param ResponseInterface $response
-     */
     public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
     }
 
     /**
-     * @inheritDoc
+     * Return injected response to reverse order of middleware stack.
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        // Return injected response to reverse order of middleware stack
         return $this->response;
     }
 }
